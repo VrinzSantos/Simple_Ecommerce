@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <title>Simple Ecommerce</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            font-family: 'Poppins';
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px;
+            max-width: 1450px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .product {
+            border: 2px solid #ddd;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px; /* Add margin-top to create space between button and input */
+        }
+
+        label {
+            margin-right: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-right: 10px; /* Add margin-right to create space between label and input */
+        }
+
+        h2 {
+            margin-top: 2px;
+            font-family: 'Poppins';
+        }
+
+        p {
+            font-weight: bold;
+        }
+
+        img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            padding: 10px 30px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>School Supplies</h1>
+    </header>
+    <main>
+
+        {% for product in products %}
+
+                <div class="product">
+                    <h2>{{ product.name }}</h2>
+                    <div class="image-container">
+                        {% for image_url in product.images %}
+                            <img src="/images/{{ image_url }}" alt="{{ product.name }}">
+                        {% endfor %}
+                    </div>
+                    <p class="price">₱{{ product.price }}</p>
+                    <form action="/sales/" method="POST">
+                        <label for="quantity-input-{{ product.name }}">Quantity:</label>
+                        <input type="number" id="quantity-input-{{ product.name }}" name="quantity" value="1" min="1">
+                        <input type="hidden" name="productName" value="{{ product.name }}">
+                        <input type="hidden" name="price" value="{{ product.price }}">
+                        <input type="hidden" name="totalPrice" value="{{ product.price }}">
+                        <div class="quantity-container">
+                            <button type="submit">Buy</button>
+                        </div>
+                    </form>
+                </div>
+
+        {% endfor %}
+  
+    </main>
+
+</html>
